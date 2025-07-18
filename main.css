@@ -1,0 +1,758 @@
+main.css（最終版）
+
+/*
+ * 基本スタイルとユーティリティ
+ * -----------------------------------------------------------
+ * - body要素全体のフォント設定とレイアウト。
+ * - コンテンツ幅を均一に保つためのコンテナ設定。
+ * - アクセシビリティの改善。
+ */
+body {
+    font-family: 'Noto Sans JP', sans-serif; /* 日本語に最適なフォントを指定 */
+    line-height: 1.8; /* 行の高さを調整して読みやすく */
+    margin: 0; /* bodyのデフォルトマージンを削除 */
+    padding: 0; /* bodyのデフォルトパディングを削除 */
+    background-color: #eef4f8; /* 明るい背景色で目に優しく */
+    color: #333; /* 読みやすい濃いテキスト色 */
+    scroll-behavior: smooth; /* アンカーリンクへのスクロールをスムーズに */
+    overflow-x: hidden; /* スマートフォンなどで横スクロールが発生するのを防ぐ */
+    -webkit-font-smoothing: antialiased; /* WebKitブラウザでのフォント表示を滑らかに */
+    -moz-osx-font-smoothing: grayscale; /* Firefoxでのフォント表示を滑らかに */
+}
+
+/* 全体のコンテンツを囲むコンテナ */
+.container {
+    max-width: 960px; /* コンテンツの最大幅を設定 */
+    margin: 0 auto; /* 中央揃え */
+    padding: 0 20px; /* 左右にパディングを追加して、端に寄りすぎないようにする */
+}
+
+/*
+ * キーフレームアニメーション
+ * -----------------------------------------------------------
+ * - 様々な要素に再利用できるアニメーションを定義。
+ */
+/* 上からフェードインしながら現れるアニメーション */
+@keyframes fadeInDown {
+    from {
+        opacity: 0; /* 最初は透明 */
+        transform: translateY(-20px); /* 最初は少し上に位置 */
+    }
+    to {
+        opacity: 1; /* 最終的に不透明に */
+        transform: translateY(0); /* 最終的に本来の位置に */
+    }
+}
+
+/* ドクドクと脈打つようなアニメーション */
+@keyframes pulse {
+    0% {
+        transform: scale(1); /* 基準のサイズ */
+        box-shadow: 0 0 0 0 rgba(0, 123, 255, 0.7); /* 薄い影 */
+    }
+    70% {
+        transform: scale(1.02); /* 少し拡大 */
+        box-shadow: 0 0 0 10px rgba(0, 123, 255, 0); /* 影が広がり消えていく */
+    }
+    100% {
+        transform: scale(1); /* 基準のサイズに戻る */
+        box-shadow: 0 0 0 0 rgba(0, 123, 255, 0); /* 影が消える */
+    }
+}
+
+/* ふわふわと浮遊するようなアニメーション */
+@keyframes float {
+    0% { transform: translateY(0px); } /* 基準の位置 */
+    50% { transform: translateY(-10px); } /* 少し上に移動 */
+    100% { transform: translateY(0px); } /* 基準の位置に戻る */
+}
+
+/*
+ * ヘッダーセクション
+ * -----------------------------------------------------------
+ * - グラデーション背景と波形エフェクトを持つヒーローバナー。
+ * - 大学のブランディングに合わせた印象的なタイポグラフィ。
+ */
+header {
+    background-image: linear-gradient(135deg, #003366 0%, #007bff 50%, #00aaff 100%); /* 鮮やかなグラデーション背景 */
+    color: #fff; /* テキスト色を白に */
+    padding: 4rem 0; /* 上下のパディングを大きく */
+    text-align: center; /* テキストを中央揃え */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); /* 強めの影で奥行きを出す */
+    position: relative; /* 子要素の絶対配置の基準 */
+    overflow: hidden; /* 波形エフェクトのはみ出しを隠す */
+    animation: fadeInDown 1s ease-out; /* 上からフェードインするアニメーション */
+}
+
+/* ヘッダー下部の波形エフェクト */
+header::before, header::after {
+    content: ''; /* 擬似要素として空のコンテンツ */
+    position: absolute; /* 親要素を基準に絶対配置 */
+    left: 0; /* 左端に配置 */
+    width: 100%; /* 幅を100%に */
+    height: 50px; /* 波形の高さを設定 */
+    background: #eef4f8; /* bodyの背景色と同じにして、波形が背景に溶け込むように */
+    border-radius: 50% / 100%; /* 半円の形状を作成 */
+    transform: scaleX(1.5); /* X軸方向に拡大して波形を長く見せる */
+    z-index: 1; /* コンテンツの上に表示されるように */
+}
+
+header::before {
+    bottom: -25px; /* ヘッダー下部から少しはみ出して配置 */
+    transform: scaleX(1.5) rotate(3deg); /* X軸拡大と少し傾ける */
+}
+
+header::after {
+    bottom: -35px; /* さらに下にもう一つ波形を配置 */
+    transform: scaleX(1.5) rotate(-3deg); /* 逆の角度で傾ける */
+    opacity: 0.8; /* 少し透明にして重ねて表示 */
+}
+
+header h1 {
+    font-size: clamp(2rem, 5vw, 3.2rem); /* レスポンシブなフォントサイズ（最小値、可変値、最大値） */
+    margin-bottom: 1rem; /* 下マージン */
+    font-weight: 700; /* 太字 */
+    letter-spacing: 2px; /* 文字間隔を広げる */
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4); /* テキストに強い影 */
+}
+
+header h2 {
+    font-size: clamp(1.5rem, 4vw, 2.5rem); /* レスポンシブなフォントサイズ */
+    margin-top: 0; /* 上マージンを削除 */
+    font-weight: 400; /* 通常の太さ */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* テキストに影 */
+}
+
+header p {
+    font-size: clamp(1rem, 2.5vw, 1.3rem); /* レスポンシブなフォントサイズ */
+    margin-top: 2rem; /* 上マージン */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); /* テキストに影 */
+}
+
+/*
+ * グローバルナビゲーション
+ * -----------------------------------------------------------
+ * - ページ内リンクへのアクセスを容易にする固定ナビゲーション。
+ * - スクロール時に表示・非表示をJavaScriptで制御することを想定。
+ */
+#global-nav {
+    background-color: rgba(255, 255, 255, 0.95); /* 半透明の白背景 */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* 軽い影 */
+    padding: 10px 0; /* 上下のパディング */
+    position: sticky; /* スクロールに合わせて固定 */
+    top: 0; /* 画面上部に固定 */
+    z-index: 1000; /* 他の要素の上に表示 */
+    backdrop-filter: blur(5px); /* 背景を少しぼかす効果 */
+    transition: transform 0.3s ease-out, opacity 0.3s ease-out; /* 表示・非表示アニメーション用 */
+}
+
+#global-nav .container {
+    display: flex; /* Flexboxを適用して中身をレイアウト */
+    justify-content: center; /* コンテンツを中央揃え */
+    align-items: center; /* 垂直方向の中央揃え */
+    position: relative; /* ハンバーガーメニューの基準位置 */
+}
+
+#global-nav ul {
+    list-style: none; /* リストのデフォルトスタイルを削除 */
+    display: flex; /* 横並びにする */
+    justify-content: center; /* 中央揃え */
+    padding: 0;
+    margin: 0;
+}
+
+#global-nav ul li {
+    margin: 0 15px; /* 左右のマージン */
+    padding-left: 15px; /* 絵文字のパディングを削除した分を調整 */
+}
+
+#global-nav ul li a {
+    color: #0056b3; /* リンク色 */
+    font-weight: 700; /* 太字 */
+    font-size: 1.1rem; /* フォントサイズ */
+    padding: 8px 12px; /* クリックしやすいパディング */
+    border-radius: 5px; /* 角を丸く */
+    transition: background-color 0.3s ease, color 0.3s ease; /* ホバーアニメーション */
+}
+
+
+
+
+/* グローバルナビゲーションのリストアイテムから虫眼鏡を削除 */
+#global-nav ul li::before {
+    content: none; /* 擬似要素の内容を非表示にする */
+}
+
+/* ハンバーガーアイコンの初期スタイル (PCでは非表示) */
+.menu-toggle {
+    display: none;
+}
+
+/*
+ * メインコンテンツセクション
+ * -----------------------------------------------------------
+ * - すべてのコンテンツセクションに適用される共通のスタイル。
+ * - ホバー時のインタラクティブな効果。
+ * - 偶数番目のセクションに異なるスタイルを適用。
+ */
+section {
+    padding: 60px 0; /* 上下のパディングを増やす */
+    margin-bottom: 40px; /* セクション間の下マージン */
+    background-color: #fff; /* 背景色を白に */
+    border-radius: 20px; /* 角をさらに丸く */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15); /* 強めの影 */
+    transition: transform 0.4s ease-in-out, box-shadow 0.4s ease-in-out; /* 変形と影のスムーズな変化 */
+    position: relative; /* 子要素の絶対配置の基準 */
+    overflow: hidden; /* はみ出しを隠す */
+    will-change: transform, box-shadow; /* アニメーションのパフォーマンス最適化 */
+}
+
+/* セクションにマウスを重ねた時の浮き上がる効果 */
+section:hover {
+    transform: translateY(-12px); /* 縦方向に少し移動 */
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.25); /* 影を強調 */
+}
+
+/* 奇数番目のセクションに異なる背景色とドットパターン */
+section:nth-of-type(odd) {
+    background-color: #fcfdff; /* わずかに異なる背景色 */
+    background-image: radial-gradient(#e0e0e0 1px, transparent 1px); /* ドットパターン */
+    background-size: 20px 20px; /* ドットのサイズ */
+}
+
+/*
+ * 見出し (h3)
+ * -----------------------------------------------------------
+ * - 主要なセクション見出しに一貫したスタイル。
+ * - 装飾的な下線エフェクト。
+ */
+h3 {
+    font-size: clamp(1.8rem, 4vw, 2.5rem); /* レスポンシブなフォントサイズ */
+    color: #0056b3; /* 青色のテキスト */
+    text-align: center; /* 中央揃え */
+    margin-bottom: 2.5rem; /* 下マージン */
+    position: relative; /* 擬似要素の基準 */
+    padding-bottom: 15px; /* 下線との間隔 */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* 軽いテキスト影 */
+}
+
+/* h3下部の装飾的な下線 */
+h3::after {
+    content: ''; /* 擬似要素として空のコンテンツ */
+    position: absolute; /* 絶対配置 */
+    bottom: 0; /* 下部に配置 */
+    left: 50%; /* 左から50%の位置 */
+    transform: translateX(-50%); /* 中央揃え */
+    width: clamp(200px, 80%, 850px); /* レスポンシブな幅 */
+    height: 6px; /* 下線の太さ */
+    background-color: #FF7F50; /* アクセントカラー */
+    border-radius: 3px; /* 角を丸く */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* 影 */
+}
+
+/*
+ * 段落 (p)
+ * -----------------------------------------------------------
+ * - 本文の読みやすさを向上。
+ */
+p {
+    font-size: clamp(1rem, 2vw, 1.25rem); /* レスポンシブなフォントサイズ */
+    line-height: 2; /* 行の高さを広げて読みやすく */
+    margin-bottom: 2rem; /* 下マージン */
+}
+
+/*
+ * 画像
+ * -----------------------------------------------------------
+ * - レスポンシブなサイズ調整と魅力的なホバーエフェクト。
+ * - 画像説明のためのセマンティックなfigcaption。
+ */
+img {
+    display: block; /* ブロック要素として中央揃え */
+    margin: 40px auto; /* 上下のマージンと中央揃え */
+    max-width: 100%; /* 親要素の幅を超えないようにする */
+    height: auto; /* アスペクト比を維持 */
+    max-height: 350px; /* 大きな画面での最大高さを設定 */
+    border-radius: 15px; /* 角を丸く */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25); /* 強めの影 */
+    transition: transform 0.4s ease-in-out, box-shadow 0.4s ease-in-out; /* 変形と影のスムーズな変化 */
+    will-change: transform, box-shadow; /* アニメーションのパフォーマンス最適化 */
+}
+
+/* 画像にマウスを重ねた時の拡大と回転効果 */
+img:hover {
+    transform: scale(1.03) rotate(1deg); /* 少し拡大してわずかに回転 */
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35); /* 影をさらに強調 */
+}
+
+/* 画像キャプションのスタイル */
+figcaption {
+    text-align: center; /* 中央揃え */
+    font-size: 1rem; /* フォントサイズ */
+    color: #666; /* 灰色 */
+    margin-top: -25px; /* 画像との距離を調整 */
+    margin-bottom: 40px; /* 下マージン */
+    font-style: italic; /* 斜体 */
+}
+
+/*
+ * 順序なしリスト (ul)
+ * -----------------------------------------------------------
+ * - 絵文字とホバーエフェクトによるカスタムリストアイテムスタイル。
+ * - ネストされたリストには異なるスタイル。
+ */
+ul {
+    list-style-type: none; /* デフォルトの箇条書きスタイルを削除 */
+    padding-left: 0; /* 左パディングを削除 */
+    margin-bottom: 2.5rem; /* 下マージン */
+}
+
+ul li {
+    margin-bottom: 1.2rem; /* 下マージン */
+    font-size: clamp(1rem, 1.5vw, 1.15rem); /* レスポンシブなフォントサイズ */
+    position: relative; /* 擬似要素の基準 */
+    padding: 10px 15px 10px 40px; /* パディング（左に絵文字分のスペース） */
+    background-color: #f0f8ff; /* 背景色 */
+    border-left: 5px solid #007bff; /* 左ボーダー */
+    border-radius: 8px; /* 角を丸く */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); /* 軽い影 */
+    transition: transform 0.2s ease-in-out; /* 変形のスムーズな変化 */
+    outline: none; /* デフォルトのアウトラインを削除（カスタムフォーカススタイルと併用） */
+}
+
+/* リストアイテムにマウスを重ねた時、またはキーボードでフォーカスした時のスタイル */
+ul li:hover, ul li:focus-within {
+    transform: translateX(5px); /* 少し右に移動 */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* 影を少し強調 */
+}
+
+/* リストアイテムのカスタム絵文字（検索） */
+ul li::before {
+    content: '🔎'; /* 絵文字をコンテンツとして挿入 */
+    position: absolute; /* 絶対配置 */
+    left: 10px; /* 左端からの位置 */
+    top: 50%; /* 上から50%の位置 */
+    transform: translateY(-50%); /* 縦方向中央揃え */
+    font-size: 1.5rem; /* 絵文字のサイズ */
+    line-height: 1; /* 絵文字が余分な行高さを生成しないように */
+}
+
+/* ネストされた（入れ子になった）リストのスタイル */
+ul ul {
+    list-style-type: none; /* デフォルトの箇条書きスタイルを削除 */
+    padding-left: 25px; /* 左パディング */
+    margin-top: 1rem; /* 上マージン */
+    border-left: 1px dashed #ccc; /* 破線ボーダーで入れ子であることを示す */
+}
+
+/* ネストされたリストアイテムのスタイル */
+ul ul li {
+    background-color: #e6f2ff; /* 異なる背景色 */
+    border-left: 3px solid #FF7F50; /* アクセントカラーの左ボーダー */
+}
+
+/* ネストされたリストアイテムのカスタム絵文字（電球） */
+ul ul li::before {
+    content: '💡'; /* 異なる絵文字 */
+    animation: none; /* 浮遊アニメーションを適用しない */
+}
+
+/*
+ * リンク (a)
+ * -----------------------------------------------------------
+ * - インタラクティブなリンクに対する視覚的なフィードバックを強化。
+ */
+a {
+    color: #007bff; /* リンクのデフォルト色 */
+    text-decoration: none; /* デフォルトの下線を削除 */
+    transition: all 0.3s ease-in-out; /* すべてのプロパティのスムーズな変化 */
+    font-weight: bold; /* 太字 */
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); /* 軽い影 */
+    outline-offset: 2px; /* フォーカスアウトラインが要素から少し離れるように */
+}
+
+/* リンクにマウスを重ねた時、またはキーボードでフォーカスした時のスタイル */
+a:hover, a:focus {
+    color: #FF7F50; /* ホバー色 */
+    text-decoration: underline; /* 下線を表示 */
+    transform: scale(1.05); /* 少し拡大 */
+}
+
+/*
+ * 学ぶ内容カード
+ * -----------------------------------------------------------
+ * - 学習コンテンツカードのグリッド風レイアウト。
+ * - 魅力的な3Dホバーエフェクト。
+ */
+.learning-areas {
+    display: flex; /* Flexboxレイアウト */
+    flex-wrap: wrap; /* 要素が収まらない場合に折り返す */
+    gap: 40px; /* カード間のスペース */
+    justify-content: center; /* 中央揃え */
+    margin-top: 50px; /* 上マージン */
+}
+
+.learning-card {
+    background-color: #f9f9f9; /* 背景色 */
+    border: 1px solid #d0d0d0; /* 境界線 */
+    border-radius: 18px; /* 角を丸く */
+    padding: 35px; /* パディング */
+    flex: 1; /* 利用可能なスペースを均等に分配 */
+    min-width: 350px; /* カードの最小幅 */
+    max-width: calc(50% - 20px); /* 2カラム表示の最大幅（gapを考慮） */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1); /* 影 */
+    transition: all 0.4s cubic-bezier(.25,.8,.25,1); /* 滑らかなアニメーション */
+    position: relative; /* 擬似要素の基準 */
+    overflow: hidden; /* はみ出しを隠す */
+    perspective: 1000px; /* 3D効果の視点 */
+    will-change: transform, box-shadow; /* アニメーションのパフォーマンス最適化 */
+    outline: none; /* デフォルトのアウトラインを削除 */
+}
+
+/* カード上部の装飾線 */
+.learning-card::before {
+    content: ''; /* 擬似要素として空のコンテンツ */
+    position: absolute; /* 絶対配置 */
+    top: 0; /* 上部に配置 */
+    left: 0; /* 左端に配置 */
+    width: 100%; /* 幅を100%に */
+    height: 10px; /* 高さ */
+    background-image: linear-gradient(to right, #FF7F50, #FFA500); /* グラデーション背景 */
+    border-top-left-radius: 18px; /* 左上角を丸く */
+    border-top-right-radius: 18px; /* 右上角を丸く */
+}
+
+/* カードにマウスを重ねた時、またはキーボードでフォーカスした時のスタイル */
+.learning-card:hover, .learning-card:focus-within {
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25); /* 影を強調 */
+    transform: translateY(-10px) rotateX(3deg); /* 少し上に移動し、3D回転 */
+}
+
+.learning-card h4 {
+    color: #0056b3; /* 青色のテキスト */
+    font-size: clamp(1.5rem, 2.5vw, 1.8rem); /* レスポンシブなフォントサイズ */
+    margin-top: 15px; /* 上マージン */
+    margin-bottom: 25px; /* 下マージン */
+    border-bottom: 3px solid #007bff; /* 下線 */
+    padding-bottom: 10px; /* 下線との間隔 */
+    text-align: left; /* 左揃え */
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.05); /* 軽い影 */
+}
+
+.learning-card ul {
+    list-style-type: disc; /* カード内のリストは通常のディスク（黒丸） */
+    padding-left: 20px; /* 左パディング */
+    margin-bottom: 0; /* 下マージンを削除 */
+}
+
+.learning-card ul li {
+    font-size: 1.05rem; /* フォントサイズ */
+    padding-left: 0; /* 左パディングを削除 */
+    background-color: transparent; /* 背景色を透明に */
+    border-left: none; /* 左ボーダーを削除 */
+    box-shadow: none; /* 影を削除 */
+    margin-bottom: 0.8rem; /* リストアイテム間の間隔を調整 */
+}
+
+.learning-card ul li::before {
+    content: ''; /* カード内のリストアイテムにはカスタム絵文字を適用しない */
+}
+
+/*
+ * フッターセクション
+ * -----------------------------------------------------------
+ * - ヘッダーのグラデーションと一貫性のあるブランディング。
+ * - 波形エフェクトで視覚的な統一感を出す。
+ */
+footer {
+    background-image: linear-gradient(45deg, #003366 0%, #007bff 100%); /* グラデーション背景 */
+    color: #fff; /* テキスト色を白に */
+    text-align: center; /* 中央揃え */
+    padding: 35px 0; /* 上下のパディング */
+    margin-top: 60px; /* 上マージン */
+    box-shadow: 0 -8px 20px rgba(0, 0, 0, 0.3); /* 上方向に影 */
+    position: relative; /* 擬似要素の基準 */
+    overflow: hidden; /* はみ出しを隠す */
+}
+
+/* フッター上部の波形エフェクト */
+footer::before {
+    content: ''; /* 擬似要素として空のコンテンツ */
+    position: absolute; /* 絶対配置 */
+    top: -20px; /* 上部から少しはみ出して配置 */
+    left: 0; /* 左端に配置 */
+    width: 100%; /* 幅を100%に */
+    height: 40px; /* 高さ */
+    background: #eef4f8; /* bodyの背景色と同じ */
+    border-radius: 50% / 100%; /* 半円の形状 */
+    transform: scaleX(1.5) rotate(180deg); /* X軸拡大と180度回転で波形を反転 */
+    z-index: 1; /* コンテンツの上に表示されるように */
+}
+
+/*
+ * レスポンシブ調整 (メディアクエリ)
+ * -----------------------------------------------------------
+ * - 様々な画面サイズで最適なレイアウトを確保。
+ */
+
+/* 大画面（992px以上）での調整 - オプションで追加 */
+@media (min-width: 992px) {
+    .container {
+        max-width: 1140px; /* さらに大きな画面での最大幅を広げることも可能 */
+    }
+
+    header {
+        padding: 6rem 0; /* 大画面ではヘッダーのパディングをさらに大きく */
+    }
+
+    header h1 {
+        font-size: 4.5rem; /* 大画面での最大フォントサイズを調整 */
+    }
+
+    header h2 {
+        font-size: 3.5rem;
+    }
+
+    section {
+        padding: 80px 0; /* セクションのパディングを増やす */
+        margin-bottom: 60px;
+    }
+
+    /* 学習カードのレイアウト調整 */
+    .learning-areas {
+        gap: 30px;
+    }
+
+    .learning-card {
+        max-width: calc(33.333% - 27px); /* 3カラム表示にする場合 */
+        min-width: 300px; /* カードの最小幅を調整 */
+    }
+}
+
+
+/* タブレット・PC向け（769px 〜 991px） */
+@media (max-width: 991px) {
+    .container {
+        padding: 0 25px; /* タブレットでの左右パディングを調整 */
+    }
+
+    header {
+        padding: 4.5rem 0;
+    }
+
+    header h1 {
+        font-size: clamp(2.8rem, 5.5vw, 3.8rem);
+        letter-spacing: 2px;
+    }
+
+    header h2 {
+        font-size: clamp(2rem, 4vw, 3rem);
+    }
+
+    section {
+        padding: 50px 0;
+        margin-bottom: 30px;
+    }
+
+    /* 学習カードのレイアウト調整 */
+    .learning-areas {
+        gap: 30px;
+    }
+
+    .learning-card {
+        max-width: calc(50% - 15px); /* 2カラム表示を維持 */
+        min-width: 320px;
+        padding: 30px;
+    }
+}
+
+
+/* モバイル向け（〜 768px） */
+@media (max-width: 768px) {
+    .container {
+        padding: 0 15px; /* 小さい画面では左右のパディングを減らす */
+    }
+
+    header {
+        padding: 3rem 0; /* ヘッダーのパディングを調整 */
+    }
+
+    header::before, header::after {
+        height: 30px; /* モバイルでは波形を小さく */
+        bottom: -15px;
+    }
+    header::after {
+        bottom: -20px;
+    }
+
+    /* ハンバーガーメニュー用のナビゲーションスタイル */
+    #global-nav .container {
+        justify-content: space-between; /* コンテンツとトグルを両端に配置 */
+    }
+
+    #global-nav ul {
+        flex-direction: column; /* 縦並びにする */
+        align-items: center; /* 中央揃え */
+        display: none; /* 初期状態では非表示 (JavaScriptで表示/非表示を切り替える) */
+        width: 100%;
+        position: absolute;
+        top: 100%; /* ナビゲーションバーの下に配置 */
+        left: 0;
+        background-color: rgba(255, 255, 255, 0.98);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        padding: 20px 0;
+    }
+
+    #global-nav ul.active { /* JavaScriptで追加するクラス */
+        display: flex;
+    }
+
+    #global-nav ul li {
+        margin: 10px 0; /* 上下のマージンを調整 */
+        width: 80%; /* リンクの幅を調整 */
+        text-align: center;
+    }
+
+    #global-nav ul li a {
+        display: block; /* リンク全体をクリック可能にする */
+        padding: 12px 0;
+        border-bottom: 1px solid #eee; /* 区切り線 */
+    }
+
+    #global-nav ul li:last-child a {
+        border-bottom: none; /* 最後のリンクには区切り線をつけない */
+    }
+
+    /* ハンバーガーアイコン */
+    .menu-toggle {
+        display: block; /* ハンバーガーアイコンを表示 */
+        position: relative; /* containerに対する相対位置 */
+        width: 30px;
+        height: 25px;
+        cursor: pointer;
+        z-index: 1001; /* ナビゲーションより上に表示 */
+        padding: 5px; /* クリックしやすいようにパディングを追加 */
+        box-sizing: content-box; /* パディングを含まないサイズ指定 */
+    }
+
+    .menu-toggle span {
+        display: block;
+        height: 3px;
+        background-color: #0056b3;
+        margin: 6px 0;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .menu-toggle.active span:nth-child(1) {
+        transform: translateY(9px) rotate(45deg);
+    }
+
+    .menu-toggle.active span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .menu-toggle.active span:nth-child(3) {
+        transform: translateY(-9px) rotate(-45deg);
+    }
+
+
+    h3 {
+        margin-bottom: 2rem; /* マージンを減らす */
+    }
+
+    h3::after {
+        width: 60%; /* モバイルでは下線を短く */
+    }
+
+    img {
+        margin: 30px auto; /* 画像のマージンを調整 */
+        max-height: 250px; /* 画像の最大高さを小さく */
+    }
+
+    figcaption {
+        margin-top: -15px; /* キャプションのマージンを調整 */
+        margin-bottom: 30px;
+    }
+
+    .learning-areas {
+        flex-direction: column; /* 小さい画面ではカードを縦に積み重ねる */
+        gap: 30px; /* ギャップを調整 */
+    }
+
+    .learning-card {
+        min-width: unset; /* 最小幅の指定を解除 */
+        max-width: 100%; /* 全幅を使用 */
+        padding: 25px; /* カードのパディングを減らす */
+    }
+
+    .learning-card h4 {
+        margin-top: 10px;
+        margin-bottom: 20px;
+    }
+
+    ul li {
+        padding: 8px 10px 8px 35px; /* リストアイテムのパディングを調整 */
+        font-size: 1.05rem;
+    }
+
+    ul li::before {
+        left: 8px; /* 絵文字の位置を調整 */
+        font-size: 1.3rem;
+    }
+
+    footer {
+        padding: 25px 0;
+        margin-top: 40px;
+    }
+}
+
+/* さらに小さな画面（スマートフォンなど）への調整 */
+@media (max-width: 480px) {
+    header h1 {
+        letter-spacing: 1px; /* 非常に小さい画面では文字間隔を狭める */
+        font-size: clamp(1.6rem, 5.5vw, 2.5rem); /* さらに狭い画面向けに調整 */
+    }
+
+    header h2 {
+        font-size: clamp(1.2rem, 4.5vw, 2rem);
+    }
+
+    header p {
+        /* タグラインも小さく調整 */
+        font-size: clamp(0.9rem, 3.5vw, 1.2rem);
+    }
+
+    p {
+        font-size: clamp(0.95rem, 2.5vw, 1.1rem); /* 本文も少し小さく */
+    }
+
+    /* ナビゲーションリンクの調整 */
+    #global-nav ul li a {
+        font-size: 1rem;
+        padding: 10px 0;
+    }
+
+    /* ここを修正します */
+    h3 {
+        font-size: clamp(1.5rem, 4.5vw, 2rem); /* 最小値を小さくし、vw値も調整 */
+        margin-bottom: 1.5rem; /* 下マージンをさらに減らす */
+    }
+
+    /* フッターの著作権表示のフォントサイズを調整 */
+    footer p {
+        font-size: 0.8rem; /* 小さな画面ではフッターのテキストをさらに小さく */
+        line-height: 1.5; /* 行の高さを調整 */
+    }
+
+    .learning-card h4 {
+        font-size: clamp(1.1rem, 3.5vw, 1.5rem);
+    }
+
+    .learning-card ul li {
+        font-size: 0.9rem;
+    }
+
+    ul li {
+        font-size: 0.95rem;
+    }
+}
